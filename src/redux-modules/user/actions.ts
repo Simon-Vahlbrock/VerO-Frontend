@@ -1,5 +1,5 @@
 import { AppDispatch, GetAppState } from '../store.ts';
-import { postLogin, postRefreshToken } from '../../api/user/post.ts';
+import { postLogin, postLogout, postRefreshToken } from '../../api/user/post.ts';
 import { setAccessToken, setUser } from './slice.ts';
 import { AppView, setAppView } from '../app-view/slice.ts';
 import { selectAccessToken } from './selectors.ts';
@@ -17,7 +17,7 @@ export const loginUser = ({ userName, password }: LoginUserOptions) => async (di
     });
 
     if (status !== 200 || !data) {
-        return { message: 'Invalid username and password' };
+        return { message: 'Ungültiger Benutzername oder Kennwort' };
     }
 
     localStorage.setItem('refreshToken', data.refreshToken);
@@ -83,4 +83,24 @@ export const loadUser = () => async (dispatch: AppDispatch, getState: GetAppStat
     }
 
     dispatch(setUser(data));
+};
+
+export const saveLogout = () => async (dispatch: AppDispatch, getState: GetAppState) => {
+    const accessToken = selectAccessToken(getState());
+
+    if (!accessToken) {
+        return;
+    }
+
+    const { status } = await postLogout({ accessToken });
+
+    if (status !== 200) {
+        return;
+    }
+
+    localStorage.removeItem('refreshToken');
+
+    dispatch(setUser(null));
+    dispatch(setAccessToken(null));
+    dispatch(setAppView(AppView.Login));
 };

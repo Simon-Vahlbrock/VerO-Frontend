@@ -27,11 +27,11 @@ export const getThemeByMode = (mode: PaletteMode): ThemeOptions => ({
         },
         ...(mode === 'light' ? {
             background: {
-                default: '#f3f7f7'
+                default: '#f3f7f7',
             }
         } : {
             background: {
-                default: '#080c0c'
+                default: '#080c0c',
             }
         })
     },

@@ -49,3 +49,17 @@ export const postRefreshToken = async (
 
     return { status: response.status, data: response.data };
 };
+
+interface PostLogoutOptions {
+    accessToken: string;
+}
+
+export const postLogout = async ({ accessToken }: PostLogoutOptions): Promise<ApiFunctionResult> => {
+    const response = await request({
+        method: 'POST',
+        route: '/users/logout',
+        accessToken
+    });
+
+    return { status: response.status };
+};

@@ -56,7 +56,7 @@ const Login: FC = () => {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    AuVer2
+                    VerO
                 </Typography>
                 <Box component="form" noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -100,9 +100,9 @@ const Login: FC = () => {
                         disabled={isLoginDisabled}
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2, color: 'white' }}
+                        sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Anmelden
                     </Button>
 
                 </Box>

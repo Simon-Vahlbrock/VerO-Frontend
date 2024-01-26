@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, IconButton, TextField, useTheme } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import GroupsIcon from '@mui/icons-material/Groups';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -99,7 +99,7 @@ const Header: FC = () => {
                     color="inherit"
                     onClick={() => handleViewChange(AppView.UserSettings)}
                 >
-                    <PersonIcon/>
+                    <SettingsOutlinedIcon/>
                 </IconButton>
             </Box>
         </Box>

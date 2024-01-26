@@ -7,7 +7,7 @@ import { getAccessToken } from '../redux-modules/user/actions.ts';
 import { selectAppView } from '../redux-modules/app-view/selectors.ts';
 import { AppView } from '../redux-modules/app-view/slice.ts';
 import Overview from './overview/Overview.tsx';
-import UserData from './user-data/UserData.tsx';
+import UserSettings from './user-settings/UserSettings.tsx';
 
 const App: FC = () => {
     const appView = useAppSelector(selectAppView);
@@ -29,7 +29,7 @@ const App: FC = () => {
             case AppView.Overview:
                 return <Overview/>;
             case AppView.UserSettings:
-                return <UserData/>;
+                return <UserSettings/>;
             case AppView.Loading:
                 return (
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
