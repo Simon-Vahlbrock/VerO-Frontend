@@ -4,6 +4,11 @@ export enum AppView {
     Loading = 0,
     Login = 1,
     Overview = 2,
+    UserSettings = 3,
+    Users,
+    Calendar,
+    Presence,
+    Inventory,
 }
 
 interface AppViewState {

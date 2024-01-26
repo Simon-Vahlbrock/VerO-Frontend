@@ -43,7 +43,7 @@ export const getThemeByMode = (mode: PaletteMode): ThemeOptions => ({
         }
     },
     custom: {
-        secondaryBackgroundColor: mode === 'light' ? '#f1f1f1' : '#171717',
+        secondaryBackgroundColor: mode === 'light' ? '#f1f1f1' : '#0e1111',
         dividerColor: mode === 'light' ? '#e1e1e1' : '#343434',
     }
 });

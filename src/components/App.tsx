@@ -6,6 +6,8 @@ import Login from './login/Login.tsx';
 import { getAccessToken } from '../redux-modules/user/actions.ts';
 import { selectAppView } from '../redux-modules/app-view/selectors.ts';
 import { AppView } from '../redux-modules/app-view/slice.ts';
+import Overview from './overview/Overview.tsx';
+import UserData from './user-data/UserData.tsx';
 
 const App: FC = () => {
     const appView = useAppSelector(selectAppView);
@@ -25,11 +27,19 @@ const App: FC = () => {
             case AppView.Login:
                 return <Login/>;
             case AppView.Overview:
-                return <div>Hallo</div>;
-            default:
+                return <Overview/>;
+            case AppView.UserSettings:
+                return <UserData/>;
+            case AppView.Loading:
                 return (
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                         <CircularProgress/>
+                    </div>
+                );
+            default:
+                return (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                        Ups, da ist etwas schief gelaufen. Diese Page wurde nicht gefunden.
                     </div>
                 );
         }
