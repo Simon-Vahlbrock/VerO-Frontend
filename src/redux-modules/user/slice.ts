@@ -19,9 +19,17 @@ const slice = createSlice({
         },
         setAccessToken(state, action: PayloadAction<UserState['accessToken']>) {
             state.accessToken = action.payload;
+        },
+        updateUser(state, action: PayloadAction<Partial<User>>) {
+            if (state.user) {
+                state.user = {
+                    ...state.user,
+                    ...action.payload,
+                };
+            }
         }
     },
 });
 
-export const { setAccessToken, setUser } = slice.actions;
+export const { setAccessToken, setUser, updateUser } = slice.actions;
 export const userReducer = slice.reducer;

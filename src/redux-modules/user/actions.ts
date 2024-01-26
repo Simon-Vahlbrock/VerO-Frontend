@@ -1,9 +1,11 @@
 import { AppDispatch, GetAppState } from '../store.ts';
 import { postLogin, postLogout, postRefreshToken } from '../../api/user/post.ts';
-import { setAccessToken, setUser } from './slice.ts';
+import { setAccessToken, setUser, updateUser } from './slice.ts';
 import { AppView, setAppView } from '../app-view/slice.ts';
 import { selectAccessToken } from './selectors.ts';
 import { getUser } from '../../api/user/get.ts';
+import { patchUser } from '../../api/user/patch.ts';
+import { User } from '../../types/user.ts';
 
 interface LoginUserOptions {
     userName: string;
@@ -25,8 +27,6 @@ export const loginUser = ({ userName, password }: LoginUserOptions) => async (di
     dispatch(setAccessToken(data.accessToken));
 
     await dispatch(loadUser());
-
-    dispatch(setAppView(AppView.Overview));
 
     return { message: null };
 };
@@ -55,18 +55,10 @@ export const getAccessToken = () => async (dispatch: AppDispatch) => {
 
     dispatch(setAccessToken(data.accessToken));
 
+
     await dispatch(loadUser());
 
     dispatch(setAppView(AppView.Overview));
-};
-
-export const logoutUser = () => async (dispatch: AppDispatch) => {
-    localStorage.removeItem('refreshToken');
-
-    dispatch(setAppView(AppView.Login));
-
-    dispatch(setAccessToken(null));
-    dispatch(setUser(null));
 };
 
 export const loadUser = () => async (dispatch: AppDispatch, getState: GetAppState) => {
@@ -83,6 +75,7 @@ export const loadUser = () => async (dispatch: AppDispatch, getState: GetAppStat
     }
 
     dispatch(setUser(data));
+    dispatch(setAppView(AppView.Overview));
 };
 
 export const saveLogout = () => async (dispatch: AppDispatch, getState: GetAppState) => {
@@ -98,9 +91,31 @@ export const saveLogout = () => async (dispatch: AppDispatch, getState: GetAppSt
         return;
     }
 
+    void dispatch(handleLogoutUser());
+};
+
+export const saveUserUpdate = (data: Partial<User>) => async (dispatch: AppDispatch, getState: GetAppState) => {
+    const accessToken = selectAccessToken(getState());
+
+    if (!accessToken) {
+        return;
+    }
+
+    const { status } = await patchUser({ accessToken, body: data });
+
+    if (status !== 200) {
+        return;
+    }
+
+    dispatch(updateUser(data));
+};
+
+export const handleLogoutUser = () => async (dispatch: AppDispatch) => {
+    dispatch(setAppView(AppView.Login));
+
     localStorage.removeItem('refreshToken');
 
     dispatch(setUser(null));
     dispatch(setAccessToken(null));
-    dispatch(setAppView(AppView.Login));
+
 };
