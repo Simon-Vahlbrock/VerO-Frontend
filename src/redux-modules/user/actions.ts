@@ -94,14 +94,23 @@ export const saveLogout = () => async (dispatch: AppDispatch, getState: GetAppSt
     void dispatch(handleLogoutUser());
 };
 
-export const saveUserUpdate = (data: Partial<User>) => async (dispatch: AppDispatch, getState: GetAppState) => {
+interface SaveUserUpdateOptions {
+    data: Partial<User>;
+    userNameToUpdate: string;
+}
+
+export const saveUserUpdate = (
+    {
+        data,
+        userNameToUpdate
+    }: SaveUserUpdateOptions) => async (dispatch: AppDispatch, getState: GetAppState) => {
     const accessToken = selectAccessToken(getState());
 
     if (!accessToken) {
         return;
     }
 
-    const { status } = await patchUser({ accessToken, body: data });
+    const { status } = await patchUser({ accessToken, data, userNameToUpdate });
 
     if (status !== 200) {
         return;

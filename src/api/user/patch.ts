@@ -4,14 +4,20 @@ import { User } from '../../types/user.ts';
 
 interface PatchUserOptions {
     accessToken: string;
-    body: Partial<User>;
+    data: Partial<User>;
+    userNameToUpdate: string;
 }
 
-export const patchUser = async ({ accessToken, body }: PatchUserOptions): Promise<ApiFunctionResult> => {
+export const patchUser = async (
+    {
+        accessToken,
+        data,
+        userNameToUpdate
+    }: PatchUserOptions): Promise<ApiFunctionResult> => {
     const response = await request<null, Partial<User>>({
-        route: '/users/update',
+        route: `/users/update/${userNameToUpdate}`,
         method: 'PATCH',
-        body,
+        body: data,
         accessToken
     });
 

@@ -40,13 +40,19 @@ const UserSettings: FC = () => {
             return;
         }
 
-        await dispatch(saveUserUpdate({ [key]: localUser[key] }));
+        await dispatch(saveUserUpdate({
+            data: { [key]: localUser[key] },
+            userNameToUpdate: user.userName
+        }));
 
         setLocalUser({});
     };
 
     const handleEnumChange = async (value: number, key: string) => {
-        void dispatch(saveUserUpdate({ [key]: value }));
+        void dispatch(saveUserUpdate({
+            data: { [key]: value },
+            userNameToUpdate: user.userName
+        }));
     };
 
     return (
@@ -165,7 +171,7 @@ const UserSettings: FC = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Adresse"
+                                label="Straße"
                                 fullWidth
                                 style={{ marginTop: '16px' }}
                                 value={localUser.address ?? user.address}
