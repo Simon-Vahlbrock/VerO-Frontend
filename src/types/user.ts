@@ -5,12 +5,12 @@ export interface User {
     email: string;
     firstName: string;
     gender: Gender;
-    lastName: string
-    phoneNumber: string
-    role: UserRole,
-    status: UserStatus,
-    userName: string,
+    lastName: string;
+    phoneNumber: string;
+    status: UserStatus;
+    userName: string;
     zipCode: string;
+    roles: UserRole[];
 }
 
 export enum UserStatus {
@@ -31,10 +31,10 @@ export enum Gender {
 }
 
 export enum UserRole {
-    // Mitglied
-    Member = 1,
-    // Mitglied Vorstand
-    BoardMember = 2,
+    Admin = 1,
     // Mitglied Geschäftsführer Vorstand
-    ExecutiveBoardMember = 3,
+    ExecutiveBoardMember = 2,
+    // Mitglied Vorstand
+    BoardMember = 3,
+    Member = 4,
 }

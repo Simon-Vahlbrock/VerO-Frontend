@@ -21,6 +21,8 @@ import { Gender, User, UserRole, UserStatus } from '../../types/user.ts';
 const UserSettings: FC = () => {
     const user = useAppSelector(selectUser)!;
 
+    const isAdmin = user.roles.includes(UserRole.Admin);
+
     const [localUser, setLocalUser] = useState<Partial<User>>({});
 
     const theme = useTheme();
@@ -112,7 +114,7 @@ const UserSettings: FC = () => {
                                 onBlur={() => handleBlur('email')}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        {/* <Grid item xs={4}>
                             <Tooltip
                                 sx={{ marginTop: '16px' }}
                                 disableHoverListener={user.role !== UserRole.Member}
@@ -132,15 +134,15 @@ const UserSettings: FC = () => {
                                     </Select>
                                 </FormControl>
                             </Tooltip>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={4}>
                             <Tooltip
                                 sx={{ marginTop: '16px' }}
-                                disableHoverListener={user.role !== UserRole.Member}
+                                disableHoverListener={isAdmin}
                                 title="Sprich mit dem Vorstand, wenn du deinen Status ändern möchtest."
                                 arrow
                             >
-                                <FormControl fullWidth disabled={user.role === UserRole.Member}>
+                                <FormControl fullWidth disabled={!isAdmin}>
                                     <InputLabel>Status</InputLabel>
                                     <Select
                                         label="Status"
